@@ -84,8 +84,8 @@ const List = ({handleSelection, data}) => {
     {
       data.map((choice, i)=> {
         return (
-          <li key={i} className={style.choice}>
-          <img key={choice} src={choice} onClick={(e)=> { handleSelection(e.target)}}/>
+          <li key={i} >
+          <img key={choice} className={style.choice} src={choice} onClick={(e)=> { handleSelection(e.target)}}/>
          </li>
         )
       })

@@ -1,12 +1,11 @@
 // Faces
 const facelist = [
 
-	require('./faces/1.png'),
-	require('./faces/2.png'),
-	require('./faces/3.png'),
-	require('./faces/4.png'),
-	require('./faces/5.png'),
-	require('./faces/6.png'),
+	require('./faces2/1.png'),
+	require('./faces2/1-2.png'),
+	require('./faces2/3.png'),
+	require('./faces2/4.png'),
+	require('./faces2/5.png'),
 
 ]
 
@@ -41,24 +40,24 @@ const bglist = [
 // HairStyles
 const hairlist = [
 
-	require('./hair/1.png'),
-	require('./hair/2.png'),
-	require('./hair/3.png'),
-	require('./hair/4.png'),
-	require('./hair/5.png'),
-	require('./hair/6.png'),
-	require('./hair/7.png'),
-	require('./hair/8.png'),
-	require('./hair/9.png'),
-	require('./hair/10.png'),
-	require('./hair/11.png'),
-	require('./hair/12.png'),
-	require('./hair/13.png'),
-	require('./hair/14.png'),
-	require('./hair/15.png'),
-	require('./hair/16.png'),
-	require('./hair/17.png'),
-	require('./hair/18.png'),
+	require('./hair2/1.png'),
+	require('./hair2/2.png'),
+	require('./hair2/3.png'),
+	require('./hair2/4.png'),
+	// require('./hair/5.png'),
+	// require('./hair/6.png'),
+	// require('./hair/7.png'),
+	// require('./hair/8.png'),
+	// require('./hair/9.png'),
+	// require('./hair/10.png'),
+	// require('./hair/11.png'),
+	// require('./hair/12.png'),
+	// require('./hair/13.png'),
+	// require('./hair/14.png'),
+	// require('./hair/15.png'),
+	// require('./hair/16.png'),
+	// require('./hair/17.png'),
+	// require('./hair/18.png'),
 
 ]
 

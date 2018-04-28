@@ -15,8 +15,8 @@ class Canvas extends React.Component{
 		// Make a New Canvas
     this.canvas = new fabric.StaticCanvas('canvas', {
 			preserveObjectStacking: true,
-			height:375,
-			width:375,
+			height:400,
+			width:400,
     });
 
 	}
