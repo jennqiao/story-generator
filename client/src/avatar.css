@@ -1,0 +1,26 @@
+
+
+.avatarMaker {
+  text-align: center;
+}
+
+.list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  list-style: none;
+  padding:0px;
+}
+
+.choice {
+  width: 76px;
+
+}
+
+.canvas {
+  border: 1px solid #ececec; 
+  background: rgb(248, 246, 246);
+  width: 450px;
+  height: 450px;
+  margin: auto;
+}
