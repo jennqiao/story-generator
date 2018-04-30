@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import style from './style.css';
-import Avatar from './Avatar.jsx';
+import style from './styles/app.css';
+import Avatar from './components/Avatar.jsx';
 import example from './exampleStory.js';
 
 class App extends React.Component {

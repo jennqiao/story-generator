@@ -1,0 +1,35 @@
+.Amaticfont {
+  font-family: 'Amatic SC', cursive;
+}
+
+.avatarMaker {
+  text-align: center;
+  width: 500px;
+  margin: auto;
+}
+
+.list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  list-style: none;
+  padding:0px;
+}
+
+.choice {
+  composes: Amaticfont;
+  width: 100px;
+  font-size: 30px;
+}
+
+.choice:hover {
+  color: rgb(126, 208, 255);
+  cursor: pointer;
+}
+
+.selectedChoice {
+  composes: Amaticfont;
+  width: 100px;
+  font-size: 30px;
+  color: rgb(126, 208, 255);
+}

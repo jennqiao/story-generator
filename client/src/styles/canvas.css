@@ -1,0 +1,7 @@
+.canvas {
+  border: 1px solid rgb(126, 208, 255); 
+  /* background: rgb(244, 245, 245); */
+  width: 450px;
+  height: 450px;
+  margin: auto;
+}

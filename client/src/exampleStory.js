@@ -5,6 +5,7 @@ let story = {
     "children": [
       {
         "buttonText": 'Go explore the closet',
+        // "nextPage": {}
         "pageId": '1a' 
       },
       {
