@@ -10,6 +10,8 @@ class App extends React.Component {
     super(props)
     this.state = {
       name: '',
+      customPart: 1,
+      hasName: false,
       storyReady: false,
       story: example,
       currentPage: '0'
@@ -18,17 +20,26 @@ class App extends React.Component {
     this.handleGenerateStory = this.handleGenerateStory.bind(this);
     this.handleStoryOutput = this.handleStoryOutput.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.submitName = this.submitName.bind(this);
   }
 
   handleInput(e) {
+    let name = e.target.value;
+    name = name[0].toUpperCase()+name.slice(1).toLowerCase();
     this.setState({
-      name: e.target.value
+      name: name
     })
   }
 
   handleGenerateStory() {
     this.setState({
       storyReady:true
+    })
+  }
+
+  submitName() {
+    this.setState({
+      hasName: true
     })
   }
 
@@ -48,26 +59,38 @@ class App extends React.Component {
 
   render() {
 
-    if (!this.state.storyReady) {
-      
-      return (
-        <div className={style.app}>
+    if (!this.state.storyReady && !this.state.hasName) {
 
-          <Avatar/>
-
-          <div className={style.box}>
-            <div className={style.title}>What's your name?</div>
-            <div>
-              <input className={style.input} onChange={this.handleInput} type='text' name='text' placeholder='your name here'></input>
+        return (
+          <div className={style.app}>
+  
+  
+            <div className={style.box}>
+              <div className={style.title}>What's your name?</div>
+              <div>
+                <input className={style.input} onChange={this.handleInput} type='text' name='text' placeholder='your name here'></input>
+              </div>
+              <div>
+              <button className={style.button} onClick={this.submitName}>Generate my story</button>
+              </div>
             </div>
-            <div>
-            <button className={style.button} onClick={this.handleGenerateStory}>Generate my story</button>
+            <img className={style.image} src='../public/openbook.png' />
+          </div>
+        )
+      } else if (!this.state.storyReady && this.state.hasName) {
+        return (
+          <div className={style.app}>
+
+           <div className={style.box}>
+              <div className={style.title}>Hi {this.state.name}! First, let's design your character.</div>
+              <Avatar/>
+              <div>
+              <button className={style.button} onClick={this.handleGenerateStory}>Let's go!</button>
+              </div>
             </div>
           </div>
-          <img className={style.image} src='../public/openbook.png' />
-        </div>
-      )
-    } else {
+        )
+      } else {
       return (
         <div className={style.app}>
           <h1 className={style.title}>The Adventures of {this.state.name}</h1>
