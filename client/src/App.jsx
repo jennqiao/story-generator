@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Link, Switch, Route } from 'react-router-dom';
 import style from './styles/app.css';
 import Avatar from './components/Avatar.jsx';
 import example from './exampleStory.js';
@@ -70,63 +71,75 @@ class App extends React.Component {
 
   render() {
 
-    if (!this.state.storyReady && !this.state.hasName) {
+    return (
 
-        return (
-          <div className={style.app}>
+    <Switch>
+      <Route
+      path='/'
+      render={(props) => <Home {...props} handleKeyPress={this.handleKeyPress} handleInput={this.handleInput} submitName={this.submitName} />}
+      />        
+      {/* <Route path='/avatar' component={Avatar}></Route>
+        <Route path='/story' component={Story}></Route> */}
+    </Switch>
+    )
+
+
+
+    // if (!this.state.storyReady && !this.state.hasName) {
+
+    //     return (
+    //       <div className={style.app}>
   
   
-            <div className={style.box}>
-              <div className={style.title}>What's your name?</div>
-              <div>
-                <input className={style.input} onKeyDown={this.handleKeyPress} onChange={this.handleInput} type='text' name='text' placeholder='your name here'></input>
-              </div>
-              <div>
-              <button className={style.button} onClick={this.submitName}>Generate my story</button>
-              </div>
-            </div>
-            <img className={style.image} src='../public/openbook.png' />
-          </div>
-        )
-      } else if (!this.state.storyReady && this.state.hasName) {
-        return (
-          <div className={style.app}>
+    //         <div className={style.box}>
+    //           <div className={style.title}>What's your name?</div>
+    //           <div>
+    //             <input className={style.input} onKeyDown={this.handleKeyPress} onChange={this.handleInput} type='text' name='text' placeholder='your name here'></input>
+    //           </div>
+    //           <div>
+    //           <button className={style.button} onClick={this.submitName}>Generate my story</button>
+    //           </div>
+    //         </div>
+    //         <img className={style.image} src='../public/openbook.png' />
+    //       </div>
+    //     )
+    //   } else if (!this.state.storyReady && this.state.hasName) {
+    //     return (
+    //       <div className={style.app}>
 
-           <div className={style.box}>
-              <div className={style.title}>
-                  <div>Hi {this.state.name}!</div> 
-                  <div>First, let's design your character.</div>
-              </div>
-              <Avatar/>
-              <div>
-              <button className={style.button} onClick={this.handleGenerateStory}>Let's go!</button>
-              </div>
-            </div>
-          </div>
-        )
-      } else {
-      return (
-        <div className={style.app}>
-          <h1 className={style.title}>The Adventures of {this.state.name}</h1>
-          <div className={style.storyImage}>
-            <img className={style.image} src={''+this.handleStoryOutput('image')} />
-          </div>
-          <div className={style.storyText}>
-            {this.handleStoryOutput('text')}
-          </div>
-          <div>
-            {
-              this.state.story[this.state.currentPage].children.map((choice, index) => {
-                return <Choice key={index} text={choice.buttonText} nextPage={choice.pageId} handleChange={this.handlePageChange}/>
-              })
-            }
-          </div>
-        </div>
-      )
+    //        <div className={style.box}>
+    //           <div className={style.title}>
+    //               <div>Hi {this.state.name}!</div> 
+    //               <div>First, let's design your character.</div>
+    //           </div>
+    //           <Avatar/>
+    //           <div>
+    //           <button className={style.button} onClick={this.handleGenerateStory}>Let's go!</button>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     )
+    //   } else {
+    //   return (
+    //     <div className={style.app}>
+    //       <h1 className={style.title}>The Adventures of {this.state.name}</h1>
+    //       <div className={style.storyImage}>
+    //         <img className={style.image} src={''+this.handleStoryOutput('image')} />
+    //       </div>
+    //       <div className={style.storyText}>
+    //         {this.handleStoryOutput('text')}
+    //       </div>
+    //       <div>
+    //         {
+    //           this.state.story[this.state.currentPage].children.map((choice, index) => {
+    //             return <Choice key={index} text={choice.buttonText} nextPage={choice.pageId} handleChange={this.handlePageChange}/>
+    //           })
+    //         }
+    //       </div>
+    //     </div>
+    //   )
 
-    }
-
-
+    // }
 
   }
 
@@ -138,6 +151,28 @@ class App extends React.Component {
     <button className={style.button} onClick={()=> {handleChange(nextPage)}}>{text}</button>
   )
  }
+
+
+const Home = ({handleKeyPress, handleInput, submitName}) => {
+
+  return (
+    <div className={style.app}>
+
+      <div className={style.box}>
+        <div className={style.title}>What's your name?</div>
+        <div>
+          <input className={style.input} onKeyDown={handleKeyPress} onChange={handleInput} type='text' name='text' placeholder='your name here'></input>
+        </div>
+        <div>
+        <Link to="/avatar"><button className={style.button}>Generate my story</button></Link>
+        </div>
+      </div>
+      <img className={style.image} src='../public/openbook.png' />
+    </div>
+  )
+
+
+}
 
 
 export default App;
