@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {fabric} from 'fabric';
 import style from '../styles/avatar.css';
-import {bglist, headlist, facelist, hairlist} from '../images/templates/templatelist';
+import {bglist, headlist, facelist, hairlist, haircolors} from '../images/templates/templatelist';
 import Canvas from './Canvas.jsx';
 
 class Avatar extends React.Component {
@@ -14,14 +14,18 @@ class Avatar extends React.Component {
       currentChoices: headlist,
       currentType: 'head',
       currentZIndex: 0,
-      listOfTypes: ['head', 'face', 'hair', 'haircolor']
+      listOfTypes: ['head', 'face', 'hair', 'haircolor'],
+      currentHairChoice: 0
     }
 
     this.handleSelection = this.handleSelection.bind(this);
     this.handleTypeSelection = this.handleTypeSelection.bind(this);
   }
 
-  handleSelection (imgElement) {
+  handleSelection (imgElement, hairNum) {
+
+    console.log('hairnum', hairNum);
+
 
     let imgInstance = new fabric.Image(imgElement, {  
       width: 400,
@@ -31,6 +35,10 @@ class Avatar extends React.Component {
     });
 
     this.setState({currentSelection: imgInstance });
+
+    if (this.state.currentType === 'hair') {
+      this.setState({currentHairChoice: hairNum});
+    }
 
   }
 
@@ -55,6 +63,13 @@ class Avatar extends React.Component {
         currentType: type,
         currentZIndex: 2
       })
+    } else if (type === 'haircolor') {
+      this.setState({
+        currentChoices: haircolors[this.state.currentHairChoice],
+        currentType: type, 
+        currentZIndex: 2
+      })
+
     }
   }
 
@@ -86,7 +101,7 @@ const List = ({handleSelection, data}) => {
       data.map((choice, i)=> {
         return (
           <li key={i} >
-          <img key={choice} className={style.choice} src={choice} onClick={(e)=> { handleSelection(e.target)}}/>
+          <img key={choice} className={style.choice} src={choice} onClick={(e)=> { handleSelection(e.target, i)}}/>
          </li>
         )
       })
@@ -103,9 +118,9 @@ const ListOfTypes = ({list, handleTypeSelection, currentChoice}) => {
       <ul className={style.list}>
 
       {
-        list.map(type => {
+        list.map( (type, index) => {
           return (
-            <li className={ (currentChoice===type) ? style.selectedChoice : style.choice} onClick={()=> {handleTypeSelection(type)}} >{type}</li>
+            <li  key={index} className={ (currentChoice===type) ? style.selectedChoice : style.choice} onClick={()=> {handleTypeSelection(type)}} >{type}</li>
 
           )
         })

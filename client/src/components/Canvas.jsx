@@ -35,8 +35,13 @@ class Canvas extends React.Component{
   
       let existingImage;
 
+      console.log('nextimage type', nextImage.the_type);
+
 			// Find the same kind of element
 			this.canvas.forEachObject( (image) => {
+        if(nextImage.the_type === 'hair' && image.the_type === 'haircolor' || nextImage.the_type === 'haircolor' && image.the_type === 'hair') {
+          existingImage = image;
+        }
 
 				if(image.the_type === nextImage.the_type){
           existingImage = image;   

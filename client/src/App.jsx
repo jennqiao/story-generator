@@ -21,6 +21,7 @@ class App extends React.Component {
     this.handleStoryOutput = this.handleStoryOutput.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.submitName = this.submitName.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   handleInput(e) {
@@ -29,6 +30,16 @@ class App extends React.Component {
     this.setState({
       name: name
     })
+  }
+
+  handleKeyPress(e) {
+    if (e.keyCode === 13 || e.charCode ===13) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.setState({
+        hasName: true
+      })
+    }
   }
 
   handleGenerateStory() {
@@ -68,7 +79,7 @@ class App extends React.Component {
             <div className={style.box}>
               <div className={style.title}>What's your name?</div>
               <div>
-                <input className={style.input} onChange={this.handleInput} type='text' name='text' placeholder='your name here'></input>
+                <input className={style.input} onKeyDown={this.handleKeyPress} onChange={this.handleInput} type='text' name='text' placeholder='your name here'></input>
               </div>
               <div>
               <button className={style.button} onClick={this.submitName}>Generate my story</button>
@@ -82,7 +93,10 @@ class App extends React.Component {
           <div className={style.app}>
 
            <div className={style.box}>
-              <div className={style.title}>Hi {this.state.name}! First, let's design your character.</div>
+              <div className={style.title}>
+                  <div>Hi {this.state.name}!</div> 
+                  <div>First, let's design your character.</div>
+              </div>
               <Avatar/>
               <div>
               <button className={style.button} onClick={this.handleGenerateStory}>Let's go!</button>

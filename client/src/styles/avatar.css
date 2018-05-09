@@ -31,5 +31,6 @@
   composes: Amaticfont;
   width: 100px;
   font-size: 30px;
-  color: rgb(126, 208, 255);
+  background-color: rgb(126, 208, 255);
+  color: white;
 }
