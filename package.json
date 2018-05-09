@@ -23,7 +23,9 @@
   },
   "dependencies": {
     "babel-preset-env": "^1.6.1",
+    "express": "^4.16.3",
     "fabric": "^2.2.3",
+    "morgan": "^1.9.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1"
   }
