@@ -11,17 +11,8 @@ class App extends React.Component {
     super(props)
     this.state = {
       name: '',
-      customPart: 1,
-      hasName: false,
-      storyReady: false,
-      story: example,
-      currentPage: '0'
     }
     this.handleInput = this.handleInput.bind(this);
-    this.handleGenerateStory = this.handleGenerateStory.bind(this);
-    this.handleStoryOutput = this.handleStoryOutput.bind(this);
-    this.handlePageChange = this.handlePageChange.bind(this);
-    this.submitName = this.submitName.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
@@ -43,32 +34,6 @@ class App extends React.Component {
     }
   }
 
-  handleGenerateStory() {
-    this.setState({
-      storyReady:true
-    })
-  }
-
-  submitName() {
-    this.setState({
-      hasName: true
-    })
-  }
-
-  handleStoryOutput(type) {
-    let str = this.state.story[this.state.currentPage][type];
-    let newS = str.replace("${this.state.name}", this.state.name);
-    return newS;
-  }
-
-  handlePageChange(page) {
-
-    this.setState({
-      currentPage: page
-    })
-
-  }
-
   render() {
 
     return (
@@ -76,74 +41,18 @@ class App extends React.Component {
     <Switch>
       <Route
       exact path='/'
-      render={(props) => <Home {...props} handleKeyPress={this.handleKeyPress} handleInput={this.handleInput} submitName={this.submitName} />}
+      render={(props) => <Home {...props} handleKeyPress={this.handleKeyPress} handleInput={this.handleInput} />}
       />  
       <Route
       path='/avatar'
       render={(props) => <Avatar {...props} name={this.state.name} />}
       />       
-      {/* <Route path='/avatar' component={Avatar}></Route>
-        <Route path='/story' component={Story}></Route> */}
+      <Route
+      path='/story'
+      render={(props) => <Story {...props} name={this.state.name} />}
+      />   
     </Switch>
     )
-
-
-
-    // if (!this.state.storyReady && !this.state.hasName) {
-
-    //     return (
-    //       <div className={style.app}>
-  
-  
-    //         <div className={style.box}>
-    //           <div className={style.title}>What's your name?</div>
-    //           <div>
-    //             <input className={style.input} onKeyDown={this.handleKeyPress} onChange={this.handleInput} type='text' name='text' placeholder='your name here'></input>
-    //           </div>
-    //           <div>
-    //           <button className={style.button} onClick={this.submitName}>Generate my story</button>
-    //           </div>
-    //         </div>
-    //         <img className={style.image} src='../public/openbook.png' />
-    //       </div>
-    //     )
-    //   } else if (!this.state.storyReady && this.state.hasName) {
-    //     return (
-    //       <div className={style.app}>
-
-    //        <div className={style.box}>
-    //           <div className={style.title}>
-    //               <div>Hi {this.state.name}!</div> 
-    //               <div>First, let's design your character.</div>
-    //           </div>
-    //           <Avatar/>
-    //           <div>
-    //           <button className={style.button} onClick={this.handleGenerateStory}>Let's go!</button>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     )
-    //   } else {
-    //   return (
-    //     <div className={style.app}>
-    //       <h1 className={style.title}>The Adventures of {this.state.name}</h1>
-    //       <div className={style.storyImage}>
-    //         <img className={style.image} src={''+this.handleStoryOutput('image')} />
-    //       </div>
-    //       <div className={style.storyText}>
-    //         {this.handleStoryOutput('text')}
-    //       </div>
-    //       <div>
-    //         {
-    //           this.state.story[this.state.currentPage].children.map((choice, index) => {
-    //             return <Choice key={index} text={choice.buttonText} nextPage={choice.pageId} handleChange={this.handlePageChange}/>
-    //           })
-    //         }
-    //       </div>
-    //     </div>
-    //   )
-
-    // }
 
   }
 
@@ -157,7 +66,7 @@ class App extends React.Component {
  }
 
 
-const Home = ({handleKeyPress, handleInput, submitName}) => {
+const Home = ({handleKeyPress, handleInput}) => {
 
   return (
     <div className={style.app}>
@@ -168,13 +77,64 @@ const Home = ({handleKeyPress, handleInput, submitName}) => {
           <input className={style.input} onKeyDown={handleKeyPress} onChange={handleInput} type='text' name='text' placeholder='your name here'></input>
         </div>
         <div>
-        <Link to="/avatar"><button className={style.button} onClick={submitName}>Generate my story</button></Link>
+        <Link to="/avatar"><button className={style.button}>Generate my story</button></Link>
         </div>
       </div>
       <img className={style.image} src='/openbook.png' />
     </div>
   )
+}
 
+
+class Story extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPage: '0',
+      story: example
+    }
+    this.name = this.props.name;
+    this.handleStoryOutput = this.handleStoryOutput.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
+  }
+
+  handleStoryOutput(type) {
+    let str = this.state.story[this.state.currentPage][type];
+    let newS = str.replace("${this.state.name}", this.name);
+    return newS;
+  }
+
+  handlePageChange(page) {
+
+    this.setState({
+      currentPage: page
+    })
+
+  }
+
+  render () {
+    return (
+      <div className={style.app}>
+        <h1 className={style.title}>The Adventures of {this.name}</h1>
+        <div className={style.storyImage}>
+          <img className={style.image} src={''+this.handleStoryOutput('image')} />
+        </div>
+        <div className={style.storyText}>
+          {this.handleStoryOutput('text')}
+        </div>
+        <div>
+          {
+            this.state.story[this.state.currentPage].children.map((choice, index) => {
+              return <Choice key={index} text={choice.buttonText} nextPage={choice.pageId} handleChange={this.handlePageChange}/>
+            })
+          }
+        </div>
+      </div>
+     
+    )
+
+  }
 
 }
 

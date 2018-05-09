@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {fabric} from 'fabric';
+import { Link } from 'react-router-dom';
 import style from '../styles/avatar.css';
 import {bglist, headlist, facelist, hairlist, haircolors} from '../images/templates/templatelist';
 import Canvas from './Canvas.jsx';
@@ -78,21 +79,6 @@ class Avatar extends React.Component {
 
     return (
 
-      // (
-        //       <div className={style.app}>
-    
-        //        <div className={style.box}>
-        //           <div className={style.title}>
-        //               <div>Hi {this.state.name}!</div> 
-        //               <div>First, let's design your character.</div>
-        //           </div>
-        //           <Avatar/>
-        //          
-        //         </div>
-        //       </div>
-        //     )
-        
-
       <div className={style.avatarMaker}>
       <div className={style.title}>
             <div>Hi {this.name}</div> 
@@ -104,7 +90,7 @@ class Avatar extends React.Component {
         <List handleSelection={this.handleSelection} data={this.state.currentChoices}/>
       </div>
       <div>
-         <button className={style.button} onClick={this.handleGenerateStory}>Let's go!</button>
+      <Link to="/story"><button className={style.button}>Let's go!</button></Link>
       </div>
       </div>
 
