@@ -75,9 +75,13 @@ class App extends React.Component {
 
     <Switch>
       <Route
-      path='/'
+      exact path='/'
       render={(props) => <Home {...props} handleKeyPress={this.handleKeyPress} handleInput={this.handleInput} submitName={this.submitName} />}
-      />        
+      />  
+      <Route
+      path='/avatar'
+      render={(props) => <Avatar {...props} name={this.state.name} />}
+      />       
       {/* <Route path='/avatar' component={Avatar}></Route>
         <Route path='/story' component={Story}></Route> */}
     </Switch>
@@ -164,10 +168,10 @@ const Home = ({handleKeyPress, handleInput, submitName}) => {
           <input className={style.input} onKeyDown={handleKeyPress} onChange={handleInput} type='text' name='text' placeholder='your name here'></input>
         </div>
         <div>
-        <Link to="/avatar"><button className={style.button}>Generate my story</button></Link>
+        <Link to="/avatar"><button className={style.button} onClick={submitName}>Generate my story</button></Link>
         </div>
       </div>
-      <img className={style.image} src='../public/openbook.png' />
+      <img className={style.image} src='/openbook.png' />
     </div>
   )
 
