@@ -4,6 +4,7 @@ import {fabric} from 'fabric';
 import style from '../styles/avatar.css';
 import {bglist, headlist, facelist, hairlist, haircolors} from '../images/templates/templatelist';
 import Canvas from './Canvas.jsx';
+import image from '../images/templates/heads/1.png';
 
 class Avatar extends React.Component {
 
@@ -74,6 +75,7 @@ class Avatar extends React.Component {
   }
 
   render () {
+    console.log('here is image', image);
 
     return (
 

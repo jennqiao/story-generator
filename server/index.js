@@ -7,7 +7,9 @@ var app = express();
 
 app.use(morgan('dev'));
 
-app.use(express.static(__dirname + '/../client/public/'));
+// app.use(express.static(path.join(__dirname, '/client/public')));
+
+app.use(express.static('client/public'));
 
 // app.get('*', function (request, response){
 //   response.sendFile(path.resolve(__dirname, '../client/public', 'index.html'))

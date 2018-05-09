@@ -85,7 +85,7 @@ class App extends React.Component {
               <button className={style.button} onClick={this.submitName}>Generate my story</button>
               </div>
             </div>
-            <img className={style.image} src='../public/openbook.png' />
+            <img className={style.image} src='/openbook.png' />
           </div>
         )
       } else if (!this.state.storyReady && this.state.hasName) {
