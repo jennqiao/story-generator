@@ -4,6 +4,8 @@ import { Link, Switch, Route } from 'react-router-dom';
 import style from './styles/app.css';
 import Avatar from './components/Avatar.jsx';
 import example from './exampleStory.js';
+import { withRouter } from 'react-router'
+
 
 class App extends React.Component {
 
@@ -13,7 +15,7 @@ class App extends React.Component {
       name: '',
     }
     this.handleInput = this.handleInput.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
+   
   }
 
   handleInput(e) {
@@ -24,24 +26,15 @@ class App extends React.Component {
     })
   }
 
-  handleKeyPress(e) {
-    if (e.keyCode === 13 || e.charCode ===13) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.setState({
-        hasName: true
-      })
-    }
-  }
-
   render() {
+   
 
     return (
 
     <Switch>
       <Route
       exact path='/'
-      render={(props) => <Home {...props} handleKeyPress={this.handleKeyPress} handleInput={this.handleInput} />}
+      render={(props) => <Home {...props} handleInput={this.handleInput}/>}
       />  
       <Route
       path='/avatar'
@@ -53,9 +46,7 @@ class App extends React.Component {
       />   
     </Switch>
     )
-
   }
-
  }
 
  const Choice = ({text, handleChange, nextPage}) => {
@@ -66,23 +57,46 @@ class App extends React.Component {
  }
 
 
-const Home = ({handleKeyPress, handleInput}) => {
+class Home extends React.Component {
 
-  return (
-    <div className={style.app}>
+  constructor(props) {
+    super(props);
 
-      <div className={style.box}>
-        <div className={style.title}>What's your name?</div>
-        <div>
-          <input className={style.input} onKeyDown={handleKeyPress} onChange={handleInput} type='text' name='text' placeholder='your name here'></input>
+    this.handleInput = this.props.handleInput;
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    
+
+  }
+
+
+  handleKeyPress(e) {
+    if (e.keyCode === 13 || e.charCode ===13) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.props.history.push('/avatar');
+    }
+  }
+
+  render () {
+
+
+    return (
+      <div className={style.app}>
+  
+        <div className={style.box}>
+          <div className={style.title}>What's your name?</div>
+          <div>
+            <input className={style.input} onKeyDown={this.handleKeyPress} onChange={this.handleInput} type='text' name='text' placeholder='your name here'></input>
+          </div>
+          <div>
+          <Link to="/avatar"><button className={style.button}>Generate my story</button></Link>
+          </div>
         </div>
-        <div>
-        <Link to="/avatar"><button className={style.button}>Generate my story</button></Link>
-        </div>
+        <img className={style.image} src='/openbook.png' />
       </div>
-      <img className={style.image} src='/openbook.png' />
-    </div>
-  )
+    )
+  }
+
 }
 
 
