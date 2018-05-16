@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {fabric} from 'fabric';
+import { Link } from 'react-router-dom';
 import style from '../styles/avatar.css';
 import {bglist, headlist, facelist, hairlist, haircolors} from '../images/templates/templatelist';
 import Canvas from './Canvas.jsx';
@@ -18,6 +19,7 @@ class Avatar extends React.Component {
       currentHairChoice: 0
     }
 
+    this.name = this.props.name;
     this.handleSelection = this.handleSelection.bind(this);
     this.handleTypeSelection = this.handleTypeSelection.bind(this);
   }
@@ -78,10 +80,17 @@ class Avatar extends React.Component {
     return (
 
       <div className={style.avatarMaker}>
+      <div className={style.title}>
+            <div>Hi {this.name}</div> 
+            <div>First, let's design your character.</div>
+      </div>
       <Canvas  selection={this.state.currentSelection}/>
       <div>
         <ListOfTypes list={this.state.listOfTypes} handleTypeSelection={this.handleTypeSelection} currentChoice={this.state.currentType}/>
         <List handleSelection={this.handleSelection} data={this.state.currentChoices}/>
+      </div>
+      <div>
+      <Link to="/story"><button className={style.button}>Let's go!</button></Link>
       </div>
       </div>
 
@@ -101,7 +110,7 @@ const List = ({handleSelection, data}) => {
       data.map((choice, i)=> {
         return (
           <li key={i} >
-          <img key={choice} className={style.choice} src={choice} onClick={(e)=> { handleSelection(e.target, i)}}/>
+          <img key={choice} className={style.choice} src={`${choice}`} onClick={(e)=> { handleSelection(e.target, i)}}/>
          </li>
         )
       })
