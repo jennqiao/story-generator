@@ -100,5 +100,6 @@ const createUser = ({email, password}, cb) => {
 
 
 module.exports.create = createUser;
+module.exports.User = User;
 
 

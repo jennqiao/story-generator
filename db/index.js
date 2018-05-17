@@ -67,8 +67,6 @@ const Story = mongoose.model('Story', storySchema);
 
 // }
 
-
-
 // module.exports.save = save;
 // module.exports.getSimilarListings = getSimilarListings;
 // module.exports.Listing = Listing;
