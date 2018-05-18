@@ -15,10 +15,29 @@ class App extends React.Component {
     super(props)
     this.state = {
       name: '',
+      isLoggedin: false
     }
     this.handleInput = this.handleInput.bind(this);
-   
+    this.handleAuthentication = this.handleAuthentication.bind(this);
   }
+
+  handleAuthentication(bool) {
+    this.setState({isLoggedin: bool});
+  }
+
+  componentDidMount() {
+    axios.get('/isAuthenticated')
+      .then((response) => {
+        let isLoggedin = response.data;
+        this.handleAuthentication(isLoggedin);
+      })
+      .catch((error) => {
+      
+        console.log('here is error', error);
+      });
+  }
+
+  
 
   handleInput(e) {
     let name = e.target.value;
@@ -29,42 +48,33 @@ class App extends React.Component {
   }
 
   render() {
-   
-
     return (
       <div>
-      <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-      <h5 className="my-0 mr-md-auto font-weight-normal"><Link to="/">Story Generator</Link></h5>
-      <nav className="my-2 my-md-0 mr-md-3">
-      <Link to="/profile"><a className="p-2 text-dark" >Profile</a></Link>
-        <a className="p-2 text-dark">My Story</a>
-      </nav>
-      <Link to="/register"><a className="btn btn-outline-primary">Sign up / Login</a></Link>
-    </div>
 
-    <Switch>
-      <Route
-      exact path='/'
-      render={(props) => <Home {...props} handleInput={this.handleInput}/>}
-      />  
-      <Route
-      path='/avatar'
-      render={(props) => <Avatar {...props} name={this.state.name} />}
-      />       
-      <Route
-      path='/story'
-      render={(props) => <Story {...props} name={this.state.name} />}
-      />  
-      <Route
-      path='/register'
-      render={(props) => <Register {...props} />}
-      />  
-      <Route
-      path='/login'
-      render={(props) => <Login {...props} />}
-      />
-    </Switch>
-    </div>
+        <NavBar isLoggedin={this.state.isLoggedin}/>
+        <Switch>
+          <Route
+          exact path='/'
+          render={(props) => <Home {...props} handleInput={this.handleInput}/>}
+          />  
+          <Route
+          path='/avatar'
+          render={(props) => <Avatar {...props} name={this.state.name} />}
+          />       
+          <Route
+          path='/story'
+          render={(props) => <Story {...props} name={this.state.name} />}
+          />  
+          <Route
+          path='/register'
+          render={(props) => <Register {...props} handleAuthentication={this.handleAuthentication}/>}
+          />  
+          <Route
+          path='/login'
+          render={(props) => <Login {...props} handleAuthentication={this.handleAuthentication}/>}
+          />
+        </Switch>
+      </div>
     )
   }
  }
@@ -75,6 +85,34 @@ class App extends React.Component {
     <button className={style.button} onClick={()=> {handleChange(nextPage)}}>{text}</button>
   )
  }
+
+
+ const NavBar = ({isLoggedin}) => {
+
+  if (isLoggedin) {
+    return (
+      <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+      <h5 className="my-0 mr-md-auto font-weight-normal"><Link to="/">Story Generator</Link></h5>
+      <nav className="my-2 my-md-0 mr-md-3">
+        <a className="p-2 text-dark" href="#">Profile</a>
+        <a className="p-2 text-dark" href="#">My Story</a>
+      </nav>
+      <a className="btn btn-outline-primary" href="/logout">Logout</a>
+      </div>
+
+    )
+  } else {
+    return (
+      <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+      <h5 className="my-0 mr-md-auto font-weight-normal"><Link to="/">Story Generator</Link></h5>
+      <Link to="/register"><span className="btn btn-outline-primary">Sign up / Login</span></Link>
+      </div>
+    )
+
+  }
+  
+ }
+
 
 
 class Home extends React.Component {
@@ -103,9 +141,6 @@ class Home extends React.Component {
     return (
       <div className={style.app}>
 
-     
-
-  
         <div className={style.box}>
           <div className={style.title}>What's your name?</div>
           <div>

@@ -43,15 +43,33 @@ passport.use(new LocalStrategy( {
       if (!user.validPassword(password)) {
         return done(null, false, { msg: 'There was an issue with the login info provided. :(' });
       }
-      return done(null, user);
+      return done(null, user._id);
     });
   }
 ));
 
+app.use((req, res, next) => {
+
+  res.locals.isAuthenticated = req.isAuthenticated();
+  console.log('here is res', res.locals.isAuthenticated)
+  next();
+})
+
+app.get('/isAuthenticated', (req, res) => {
+  console.log('here is res2', res.locals.isAuthenticated);
+  res.json(res.locals.isAuthenticated);
+})
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.redirect('/');
+})
 
 app.get('*', function (request, response){
-  console.log('authentication?', request.user);
+  // console.log('authentication?', request.user);
   console.log('authentication?', request.isAuthenticated());
+  // console.log('request session', request.session.passport.user);
 
   response.sendFile(path.resolve(__dirname, '../client/public', 'index.html'))
 })
@@ -72,13 +90,12 @@ app.post('/register', [
   console.log('data received', emailAddress, password);
   db.create({email: emailAddress, password: password}, (err, user) => {
     if (err) {
+      err.errors = [ {msg: "Oops! That email already exists."}]
       res.status(500);
-      res.end(err);
+      res.json(err);
     } else {
       console.log('here is user', user);
-
       let id = user._id;
-      console.log(id);
       req.login(id, (err) => {
         res.status(200);
         res.end('user registered');
@@ -89,11 +106,8 @@ app.post('/register', [
 
 app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
-    console.log('here are errors', err);
-    console.log('here are info', info);
-
     if (err) { return next(err); }
-    if (!user) { return res.status(400).send({ errors: [info]}); }
+    if (!user) { return res.status(422).send({ errors: [info]}); }
     req.logIn(user, function(err) {
       if (err) { return next(err); }
       return res.status(200).send(user);

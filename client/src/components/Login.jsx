@@ -14,7 +14,8 @@ class Login extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmailInput = this.handleEmailInput.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
-   
+    this.handleAuthentication = this.props.handleAuthentication;
+
   }
 
   handleEmailInput(e) {
@@ -43,7 +44,9 @@ class Login extends React.Component {
         // alert('Account created');
         // console.log('in here', this.props.history);
         console.log('got response', response.data);
+        this.handleAuthentication(true);
         this.props.history.push('/');
+        
 
       })
       .catch((error) => {

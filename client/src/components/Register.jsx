@@ -15,7 +15,7 @@ class Register extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmailInput = this.handleEmailInput.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
-   
+    this.handleAuthentication = this.props.handleAuthentication;
   }
 
   handleEmailInput(e) {
@@ -46,6 +46,8 @@ class Register extends React.Component {
         // alert('Account created');
         // console.log('in here', this.props.history);
         this.props.history.push('/');
+        this.handleAuthentication(true);
+
 
       })
       .catch((error) => {
@@ -64,7 +66,7 @@ class Register extends React.Component {
       <div className={style.app}>
         <div className={style.title}>Sign up to save your progress!</div>
 
-        {this.state.errors.length ? <div>{this.state.errors.map(err => {return (<div className="alert alert-danger" role="alert">{err.msg}</div>)})}</div> : <div></div>}
+      {this.state.errors.length ? <div>{this.state.errors.map(err => {return (<div className="alert alert-danger" role="alert">{err.msg}</div>)})}</div> : <div></div>}
       <div className="form-group">
       <label>Email address</label>
       <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" onChange={this.handleEmailInput} />
@@ -77,7 +79,7 @@ class Register extends React.Component {
       <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>Submit</button>
       <div>
         <br></br>
-      <Link to="/login"><a className="p-2 text-dark" >Already signed up? Login here.</a></Link>
+      <Link to="/login"><span className="p-2 text-dark" >Already signed up? Login here.</span></Link>
       </div>
       </div>
     )
