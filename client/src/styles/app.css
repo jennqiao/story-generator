@@ -49,17 +49,3 @@
 
 }
 
-.storyText {
-  composes: Amaticfont;
-  font-size: 27px;
-  word-wrap: break-word;
-  margin: 10px auto;
-}
-
-.storyImage {
-  margin: 10px 0px;
-}
-
-.storyImage img {
-  width: 100%;
-}

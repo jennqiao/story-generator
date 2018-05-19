@@ -5,7 +5,8 @@ import style from './styles/app.css';
 import Avatar from './components/Avatar.jsx';
 import Register from './components/Register.jsx';
 import Login from './components/Login.jsx';
-import example from './exampleStory.js';
+import Dashboard from './components/Dashboard.jsx';
+import Story from './components/Story.jsx';
 import { withRouter } from 'react-router'
 const axios = require('axios');
 
@@ -69,7 +70,7 @@ class App extends React.Component {
           render={(props) => <Home {...props} handleInput={this.handleInput} isLoggedIn={this.state.isLoggedIn}/>}
           />  
           <Route
-          path='/avatar'
+          path='/avatar'          
           render={(props) => <Avatar {...props} name={this.state.name} />}
           />       
           <Route
@@ -94,22 +95,9 @@ class App extends React.Component {
   }
  }
 
- const Choice = ({text, handleChange, nextPage}) => {
 
-  return (
-    <button className={style.button} onClick={()=> {handleChange(nextPage)}}>{text}</button>
-  )
- }
 
- const Dashboard = ({name}) => {
-   return (
-     <div className={style.app}>
-        <div className={style.title}>Welcome back {name}!</div>
-        <Link to="/story"><button className={style.button}>Continue my adventure</button></Link>
-        <button className={style.button}>See my profile</button>
-     </div>
-   )
- }
+ 
 
 
  const NavBar = ({isLoggedIn}) => {
@@ -150,7 +138,6 @@ class Home extends React.Component {
   }
 
 
-
   handleKeyPress(e) {
     if (e.keyCode === 13 || e.charCode ===13) {
       e.preventDefault();
@@ -189,58 +176,6 @@ class Home extends React.Component {
 
 
 
-
-class Story extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentPage: '0',
-      story: example
-    }
-    this.name = this.props.name;
-    this.handleStoryOutput = this.handleStoryOutput.bind(this);
-    this.handlePageChange = this.handlePageChange.bind(this);
-  }
-
-  handleStoryOutput(type) {
-    let str = this.state.story[this.state.currentPage][type];
-    let newS = str.replace("${this.state.name}", this.name);
-    return newS;
-  }
-
-  handlePageChange(page) {
-
-    this.setState({
-      currentPage: page
-    })
-
-  }
-
-  render () {
-    return (
-      <div className={style.app}>
-        <h1 className={style.title}>The Adventures of {this.name}</h1>
-        <div className={style.storyImage}>
-          <img className={style.image} src={''+this.handleStoryOutput('image')} />
-        </div>
-        <div className={style.storyText}>
-          {this.handleStoryOutput('text')}
-        </div>
-        <div>
-          {
-            this.state.story[this.state.currentPage].children.map((choice, index) => {
-              return <Choice key={index} text={choice.buttonText} nextPage={choice.pageId} handleChange={this.handlePageChange}/>
-            })
-          }
-        </div>
-      </div>
-     
-    )
-
-  }
-
-}
 
 
 export default App;

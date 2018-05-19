@@ -25,8 +25,8 @@ class Avatar extends React.Component {
 
   handleSelection (imgElement, hairNum) {
 
-    console.log('hairnum', hairNum);
 
+    console.log('here is img ele', imgElement, typeof imgElement);
 
     let imgInstance = new fabric.Image(imgElement, {  
       width: 400,
