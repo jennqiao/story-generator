@@ -19,7 +19,6 @@ class Avatar extends React.Component {
       currentHairChoice: 0
     }
 
-    this.name = this.props.name;
     this.handleSelection = this.handleSelection.bind(this);
     this.handleTypeSelection = this.handleTypeSelection.bind(this);
   }
@@ -81,7 +80,7 @@ class Avatar extends React.Component {
 
       <div className={style.avatarMaker}>
       <div className={style.title}>
-            <div>Hi {this.name}</div> 
+            <div>Hi {this.props.name}!</div> 
             <div>First, let's design your character.</div>
       </div>
       <Canvas  selection={this.state.currentSelection}/>
@@ -90,7 +89,7 @@ class Avatar extends React.Component {
         <List handleSelection={this.handleSelection} data={this.state.currentChoices}/>
       </div>
       <div>
-      <Link to="/story"><button className={style.button}>Let's go!</button></Link>
+      <Link to="/register"><button className={style.button}>Let's go!</button></Link>
       </div>
       </div>
 

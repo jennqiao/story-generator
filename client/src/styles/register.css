@@ -1,0 +1,17 @@
+.app {
+  text-align: center;
+  margin: auto;
+  width: 600px;
+}
+
+.fredFont {
+  /* font-family: 'Amatic SC', cursive; */
+  font-family: 'Fredericka the Great', cursive;
+  /* font-family: 'Oswald', sans-serif; */
+}
+
+.title {
+  composes: fredFont;
+  font-size: 53px;
+  margin-bottom: 10px;
+}
