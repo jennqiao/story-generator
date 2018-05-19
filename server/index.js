@@ -34,8 +34,8 @@ passport.use(new LocalStrategy( {
   usernameField: 'emailAddress'
   }, 
   function(username, password, done) {
+    console.log('in the local strategy');
     db.User.findOne({ email: username }, function (err, user) {
-      console.log('err and user', err, user);
       if (err) { return done(err); }
       if (!user) {
         return done(null, false, { msg: 'Oops! That email does not exist.' });
@@ -43,35 +43,20 @@ passport.use(new LocalStrategy( {
       if (!user.validPassword(password)) {
         return done(null, false, { msg: 'There was an issue with the login info provided. :(' });
       }
-      return done(null, user._id);
+      return done(null, user);
     });
   }
 ));
 
 app.use((req, res, next) => {
-
+  console.log('in the middleware');
   res.locals.isAuthenticated = req.isAuthenticated();
-  console.log('here is res', res.locals.isAuthenticated)
   next();
 })
 
 app.get('/isAuthenticated', (req, res) => {
-  console.log('here is res2', res.locals.isAuthenticated);
-
-  if (res.locals.isAuthenticated) {
-    db.findOne(req.user, (err, user) => {
-      if (err) {
-        res.status(500);
-        res.end('error in server', err);
-      } else {
-        console.log('in the server', user);
-        res.json({user: user, isLoggedIn: res.locals.isAuthenticated});
-      }
-    })
-  } else {
-    res.json({isLoggedIn: res.locals.isAuthenticated});
-
-  }
+  console.log('in the is authenticated? get request')
+  res.json({isLoggedIn: res.locals.isAuthenticated, user: req.user});
 })
 
 app.get('/logout', (req, res) => {
@@ -81,10 +66,6 @@ app.get('/logout', (req, res) => {
 })
 
 app.get('*', function (request, response){
-  // console.log('authentication?', request.user);
-  console.log('authentication?', request.isAuthenticated());
-  // console.log('request session', request.session.passport.user);
-
   response.sendFile(path.resolve(__dirname, '../client/public', 'index.html'))
 })
 
@@ -110,8 +91,7 @@ app.post('/register', [
       res.json(err);
     } else {
       console.log('here is user', user);
-      let id = user._id;
-      req.login(id, (err) => {
+      req.login(user, (err) => {
         res.status(200);
         res.end('user registered');
       });
@@ -122,21 +102,28 @@ app.post('/register', [
 
 app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
+    console.log('in the login post request');
     if (err) { return next(err); }
     if (!user) { return res.status(422).send({ errors: [info]}); }
-    req.logIn(user, function(err) {
+    req.login(user, function(err) {
       if (err) { return next(err); }
-      return res.status(200).send(user);
+      return res.status(200).json({user: user, isLoggedIn: true});
     });
   })(req, res, next);
 });
 
-passport.serializeUser(function(id, done) {
-  done(null, id);
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
 });
  
 passport.deserializeUser(function(id, done) {
-    done(null, id);
+    db.findOne(id, (err, user) => {
+      if (err) {
+        done(err);
+      } else {
+        done(null, user);
+      }
+    })
 });
 
 

@@ -61,8 +61,7 @@ const findOne = (userId, cb) => {
       if (err) {
         cb(err, null);
       } else {
-        let name = user.name;
-        cb(null, {name});
+        cb(null, user);
       }
     })
 };
