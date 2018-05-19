@@ -57,7 +57,21 @@ app.use((req, res, next) => {
 
 app.get('/isAuthenticated', (req, res) => {
   console.log('here is res2', res.locals.isAuthenticated);
-  res.json(res.locals.isAuthenticated);
+
+  if (res.locals.isAuthenticated) {
+    db.findOne(req.user, (err, user) => {
+      if (err) {
+        res.status(500);
+        res.end('error in server', err);
+      } else {
+        console.log('in the server', user);
+        res.json({user: user, isLoggedIn: res.locals.isAuthenticated});
+      }
+    })
+  } else {
+    res.json({isLoggedIn: res.locals.isAuthenticated});
+
+  }
 })
 
 app.get('/logout', (req, res) => {
@@ -86,9 +100,10 @@ app.post('/register', [
 
   let emailAddress = req.body.emailAddress;
   let password = req.body.password;
+  let name = req.body.name;
 
-  console.log('data received', emailAddress, password);
-  db.create({email: emailAddress, password: password}, (err, user) => {
+  console.log('data received', emailAddress, password, name);
+  db.create({email: emailAddress, password: password, name: name}, (err, user) => {
     if (err) {
       err.errors = [ {msg: "Oops! That email already exists."}]
       res.status(500);
@@ -103,6 +118,7 @@ app.post('/register', [
     }
   });
 })
+
 
 app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {

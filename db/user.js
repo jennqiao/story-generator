@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   hash: String,
+  name: String
 });
 
 
@@ -39,9 +40,9 @@ userSchema.methods.generateJwt = function() {
 
 const User = mongoose.model('User', userSchema);
 
-const createUser = ({email, password}, cb) => {
+const createUser = ({email, password, name}, cb) => {
 
-  User.create({email: email}, (err, user) => {
+  User.create({email: email, name: name}, (err, user) => {
     if (err) {
       cb(err, null);
     } else {
@@ -53,6 +54,18 @@ const createUser = ({email, password}, cb) => {
   })
 
 }
+
+const findOne = (userId, cb) => {
+
+    User.findById(userId, (err, user) => {
+      if (err) {
+        cb(err, null);
+      } else {
+        let name = user.name;
+        cb(null, {name});
+      }
+    })
+};
 
 // User.create({email: "test@gmail.com"}, (err, user) => {
 //   if (err) {
@@ -99,7 +112,12 @@ const createUser = ({email, password}, cb) => {
 // })
 
 
+// console.log(findOne('5aff597a109152e79c5e2308', (err, user) => {
+//   console.log(err, user);
+// }));
+
 module.exports.create = createUser;
+module.exports.findOne = findOne;
 module.exports.User = User;
 
 

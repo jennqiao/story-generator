@@ -45,7 +45,7 @@ class Login extends React.Component {
         // console.log('in here', this.props.history);
         console.log('got response', response.data);
         this.handleAuthentication(true);
-        this.props.history.push('/');
+        this.props.history.push('/dashboard');
         
 
       })

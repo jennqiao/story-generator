@@ -18,6 +18,10 @@ class Register extends React.Component {
     this.handleAuthentication = this.props.handleAuthentication;
   }
 
+  componentDidMount() {
+    console.log('name?', this.props.name);
+  }
+
   handleEmailInput(e) {
     let email = e.target.value;
     this.setState({
@@ -36,7 +40,8 @@ class Register extends React.Component {
       
     const data = {
       emailAddress: this.state.emailAddress,
-      password: this.state.password
+      password: this.state.password,
+      name: this.props.name
     };
 
     console.log('here is data', data);
@@ -45,7 +50,7 @@ class Register extends React.Component {
       .then((response) => {
         // alert('Account created');
         // console.log('in here', this.props.history);
-        this.props.history.push('/');
+        this.props.history.push('/story');
         this.handleAuthentication(true);
 
 
