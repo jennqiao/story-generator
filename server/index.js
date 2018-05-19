@@ -8,11 +8,11 @@ const { check, validationResult } = require('express-validator/check');
 const { matchedData, sanitize } = require('express-validator/filter');
 var session = require('express-session')
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
 const MongoStore = require('connect-mongo')(session);
 
 
 var app = express();
+module.exports.app = app;
 
 app.use(express.static(__dirname + '/../client/public'));
 app.use(express.static(__dirname + '/../client/public/images'));
@@ -29,30 +29,15 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+require('./passport.js')(passport);
 
-passport.use(new LocalStrategy( {
-  usernameField: 'emailAddress'
-  }, 
-  function(username, password, done) {
-    console.log('in the local strategy');
-    db.User.findOne({ email: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { msg: 'Oops! That email does not exist.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { msg: 'There was an issue with the login info provided. :(' });
-      }
-      return done(null, user);
-    });
-  }
-));
 
 app.use((req, res, next) => {
   console.log('in the middleware');
   res.locals.isAuthenticated = req.isAuthenticated();
   next();
 })
+
 
 app.get('/isAuthenticated', (req, res) => {
   console.log('in the is authenticated? get request')
@@ -64,6 +49,7 @@ app.get('/logout', (req, res) => {
   req.session.destroy();
   res.redirect('/');
 })
+
 
 app.get('*', function (request, response){
   response.sendFile(path.resolve(__dirname, '../client/public', 'index.html'))
@@ -93,7 +79,7 @@ app.post('/register', [
       console.log('here is user', user);
       req.login(user, (err) => {
         res.status(200);
-        res.end('user registered');
+        res.json({user:user, isLoggedIn: true});
       });
     }
   });
@@ -110,20 +96,6 @@ app.post('/login', function(req, res, next) {
       return res.status(200).json({user: user, isLoggedIn: true});
     });
   })(req, res, next);
-});
-
-passport.serializeUser(function(user, done) {
-  done(null, user._id);
-});
- 
-passport.deserializeUser(function(id, done) {
-    db.findOne(id, (err, user) => {
-      if (err) {
-        done(err);
-      } else {
-        done(null, user);
-      }
-    })
 });
 
 

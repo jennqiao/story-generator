@@ -50,9 +50,9 @@ class Register extends React.Component {
       .then((response) => {
         // alert('Account created');
         // console.log('in here', this.props.history);
+        console.log('here is response data', response.data)
+        this.handleAuthentication(response.data);
         this.props.history.push('/story');
-        this.handleAuthentication(true);
-
 
       })
       .catch((error) => {
