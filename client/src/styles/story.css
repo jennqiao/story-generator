@@ -12,7 +12,7 @@
 
 .storyText {
   composes: Amaticfont from './app.css';
-  font-size: 27px;
+  font-size: 20px;
   word-wrap: break-word;
   margin: 10px auto;
 }

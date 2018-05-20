@@ -16,7 +16,7 @@
 
 .title {
   composes: fredFont;
-  font-size: 53px;
+  font-size: 32px;
   margin-bottom: 10px;
 }
 

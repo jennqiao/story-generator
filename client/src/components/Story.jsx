@@ -4,7 +4,9 @@ import {fabric} from 'fabric';
 import { Link } from 'react-router-dom';
 import style from '../styles/story.css';
 import example from '../exampleStory.js';
-import img from '../images/bedroomWithModel.jpg'
+import img from '../images/bedroomWithModel.jpg';
+import face from '../images/faceTest.png';
+
 
 class Story extends React.Component {
 
@@ -26,17 +28,19 @@ class Story extends React.Component {
 			width:600,
     });
 
+   
 
-    fabric.Image.fromURL(img, function(oImg) {
+    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+
+    fabric.Image.fromURL(face, function(oImg) {
+      oImg.scale(0.1);
+
+      oImg.set({'height': 600});
+      oImg.set({'left': 235, 'top': 85});
       canvas.add(oImg);
     });
 
 
-    
-    // this.canvas.setBackgroundImage(img);
-    // this.canvas.renderAll();				
-
-    // this.canvas.draw(img,0,0);   
 
   }
 
@@ -48,9 +52,9 @@ class Story extends React.Component {
 
   handlePageChange(page) {
 
-    // this.setState({
-    //   currentPage: page
-    // })
+    this.setState({
+      currentPage: page
+    })
 
   }
 
