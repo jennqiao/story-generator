@@ -7,7 +7,7 @@ module.exports = (passport) => {
     usernameField: 'emailAddress'
     }, 
     function(username, password, done) {
-      console.log('in the local strategy');
+      console.log('in the local strategy', username, password);
       db.User.findOne({ email: username }, function (err, user) {
         if (err) { return done(err); }
         if (!user) {

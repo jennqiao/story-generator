@@ -4,7 +4,7 @@ import {fabric} from 'fabric';
 import { Link } from 'react-router-dom';
 import style from '../styles/story.css';
 import example from '../exampleStory.js';
-import img from '../images/bedroomWithModel.jpg';
+import img from '../images/1a.png';
 import face from '../images/faceTest.png';
 import {headlist, facelist, hairlist, haircolors} from '../images/templates/templatelist';
 
@@ -14,59 +14,51 @@ class Story extends React.Component {
     super(props);
     this.state = {
       currentPage: '0',
-      story: example
+      story: example,
     }
     this.handleStoryOutput = this.handleStoryOutput.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.loadProfile = this.loadProfile.bind(this);
   }
 
   componentDidMount () {
 
-    let canvas = new fabric.StaticCanvas('canvas2', {
+    this.canvas = new fabric.StaticCanvas('canvas2', {
 			preserveObjectStacking: true,
 			height:300,
 			width:600,
     });
 
-   
-
-    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
-
-    // fabric.Image.fromURL(face, function(oImg) {
-    //   oImg.scale(0.1);
-
-    //   oImg.set({'height': 600});
-    //   oImg.set({'left': 235, 'top': 85});
-    //   canvas.add(oImg);
-    // });
+    // this.canvas.setBackgroundImage(this.state.story[this.state.currentPage].image, this.canvas.renderAll.bind(this.canvas));
+    this.canvas.setBackgroundImage(img, this.canvas.renderAll.bind(this.canvas));
 
 
-    fabric.Image.fromURL(headlist[0], function(oImg) {
-      oImg.scale(0.2);
 
-      // oImg.set({'height': 600});
-      oImg.set({'left': 225, 'top': 75});
-      canvas.add(oImg);
-    });
+  }
 
-    fabric.Image.fromURL(facelist[0], function(oImg) {
-      oImg.scale(0.2);
+  componentDidUpdate(prevProps) {
 
-      // oImg.set({'height': 600});
-      oImg.set({'left': 225, 'top': 75});
-      canvas.add(oImg);
-    });
+    if (prevProps.profile !== this.props.profile) {
+      console.log('new profile', this.props.profile)
+      this.loadProfile();
+      
+    }
 
+  }
 
-    fabric.Image.fromURL(hairlist[0], function(oImg) {
-      oImg.scale(0.2);
+  loadProfile () {
+    
+    let context = this;
+    for (var key in this.props.profile) {
 
-      // oImg.set({'height': 600});
-      oImg.set({'left': 225, 'top': 75});
-      canvas.add(oImg);
-    });
+      fabric.Image.fromURL(this.props.profile[key], function(oImg) {
+        oImg.scale(0.2);  
+        oImg.set({'left': 296, 'top': 130});
+        context.canvas.add(oImg);
+      });
 
-
+    }
+    
   }
 
   handleStoryOutput(type) {

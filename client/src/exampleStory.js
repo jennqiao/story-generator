@@ -1,6 +1,6 @@
 let story = {
   "0": {
-    "image": 'https://source.unsplash.com/800x450/?closet',
+    "image": 'https://s3.us-east-2.amazonaws.com/storygenerator/bedroomWithModel.jpg',
     "text": 'Once upon a time there was a child named ${this.state.name} who heard a noise in the closet.',
     "children": [
       {

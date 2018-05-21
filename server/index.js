@@ -89,7 +89,7 @@ app.post('/register', [
 
 app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
-    console.log('in the login post request');
+    console.log('in the login post request', err, user, info);
     if (err) { return next(err); }
     if (!user) { return res.status(422).send({ errors: [info]}); }
     req.login(user, function(err) {

@@ -30,7 +30,8 @@ class App extends React.Component {
     if (isLoggedIn) {
       this.setState({
         name: data.user.name,
-        isLoggedIn: isLoggedIn
+        isLoggedIn: isLoggedIn,
+        profile: data.user.profile
       });
       // this.props.history.push('/dashboard'); 
     }
@@ -86,7 +87,7 @@ class App extends React.Component {
           />       
           <Route
           path='/story'
-          render={(props) => <Story {...props} name={this.state.name} />}
+          render={(props) => <Story {...props} name={this.state.name} profile={this.state.profile} />}
           />  
           <Route
           path='/register'
