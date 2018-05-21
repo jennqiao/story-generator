@@ -16,10 +16,12 @@ class App extends React.Component {
     super(props)
     this.state = {
       name: '',
+      profile: {},
       isLoggedIn: false
     }
     this.handleInput = this.handleInput.bind(this);
     this.handleAuthentication = this.handleAuthentication.bind(this);
+    this.handleProfile = this.handleProfile.bind(this);
   }
 
   handleAuthentication(data) {
@@ -55,6 +57,15 @@ class App extends React.Component {
     })
   }
 
+  handleProfile (type, imageUrl) {
+    let profile = this.state.profile;
+    profile[type] = imageUrl;
+
+    this.setState({
+      profile: profile
+    })
+  }
+
   render() {
 
     console.log('is logged in on app?', this.state.isLoggedIn);
@@ -71,7 +82,7 @@ class App extends React.Component {
           />  
           <Route
           path='/avatar'          
-          render={(props) => <Avatar {...props} name={this.state.name} />}
+          render={(props) => <Avatar {...props} name={this.state.name} handleProfile={this.handleProfile} />}
           />       
           <Route
           path='/story'
@@ -79,7 +90,7 @@ class App extends React.Component {
           />  
           <Route
           path='/register'
-          render={(props) => <Register {...props} handleAuthentication={this.handleAuthentication} name={this.state.name}/>}
+          render={(props) => <Register {...props} handleAuthentication={this.handleAuthentication} name={this.state.name} profile={this.state.profile}/>}
           />  
           <Route
           path='/login'

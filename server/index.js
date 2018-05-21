@@ -68,9 +68,10 @@ app.post('/register', [
   let emailAddress = req.body.emailAddress;
   let password = req.body.password;
   let name = req.body.name;
+  let profile = req.body.profile;
 
-  console.log('data received', emailAddress, password, name);
-  db.create({email: emailAddress, password: password, name: name}, (err, user) => {
+  console.log('data received', emailAddress, password, name, profile);
+  db.create({email: emailAddress, password: password, name: name, profile: profile}, (err, user) => {
     if (err) {
       err.errors = [ {msg: "Oops! That email already exists."}]
       res.status(500);
@@ -97,6 +98,14 @@ app.post('/login', function(req, res, next) {
     });
   })(req, res, next);
 });
+
+app.post('/api/profile', (req, res) => {
+
+  let profile = req.data;
+  console.log('here is profile', profile);
+  console.log('here is user', req.user);
+
+})
 
 
 // app.get('/profile', authenticationMiddleware(), (req, res) => {

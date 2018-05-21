@@ -6,7 +6,7 @@ import style from '../styles/story.css';
 import example from '../exampleStory.js';
 import img from '../images/bedroomWithModel.jpg';
 import face from '../images/faceTest.png';
-
+import {headlist, facelist, hairlist, haircolors} from '../images/templates/templatelist';
 
 class Story extends React.Component {
 
@@ -32,14 +32,39 @@ class Story extends React.Component {
 
     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
 
-    fabric.Image.fromURL(face, function(oImg) {
-      oImg.scale(0.1);
+    // fabric.Image.fromURL(face, function(oImg) {
+    //   oImg.scale(0.1);
 
-      oImg.set({'height': 600});
-      oImg.set({'left': 235, 'top': 85});
+    //   oImg.set({'height': 600});
+    //   oImg.set({'left': 235, 'top': 85});
+    //   canvas.add(oImg);
+    // });
+
+
+    fabric.Image.fromURL(headlist[0], function(oImg) {
+      oImg.scale(0.2);
+
+      // oImg.set({'height': 600});
+      oImg.set({'left': 225, 'top': 75});
       canvas.add(oImg);
     });
 
+    fabric.Image.fromURL(facelist[0], function(oImg) {
+      oImg.scale(0.2);
+
+      // oImg.set({'height': 600});
+      oImg.set({'left': 225, 'top': 75});
+      canvas.add(oImg);
+    });
+
+
+    fabric.Image.fromURL(hairlist[0], function(oImg) {
+      oImg.scale(0.2);
+
+      // oImg.set({'height': 600});
+      oImg.set({'left': 225, 'top': 75});
+      canvas.add(oImg);
+    });
 
 
   }

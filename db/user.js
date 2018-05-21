@@ -14,7 +14,8 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   hash: String,
-  name: String
+  name: String,
+  profile: mongoose.Schema.Types.Mixed
 });
 
 
@@ -40,16 +41,18 @@ userSchema.methods.generateJwt = function() {
 
 const User = mongoose.model('User', userSchema);
 
-const createUser = ({email, password, name}, cb) => {
+const createUser = ({email, password, name, profile}, cb) => {
 
-  User.create({email: email, name: name}, (err, user) => {
+  User.create({email: email, name: name, profile: profile}, (err, user) => {
     if (err) {
       cb(err, null);
     } else {
       console.log('here is the user', user);
       user.hash = user.setPassword(password);
-      user.save();
-      cb(null, user);
+      user.save().then((user) => {
+        cb(null, user);
+      });
+      
     }
   })
 
@@ -115,8 +118,31 @@ const findOne = (userId, cb) => {
 //   console.log(err, user);
 // }));
 
+
+// User.findById("5aff6f4ce3508aef6c0ff5cd", (err, user) => {
+//   if (err) {
+//      console.log('err', err);
+//   } else {
+//    console.log('user', user);
+//    user["profile"] = {
+//     face:
+//     "images/013a80b965f231e51a264a5c9e47a653.png",
+//     hair:
+//     "images/a58991a27a738633ce5953f3c7297f10.png",
+//     haircolor:
+//     "images/399aab1e9d9595d5bdc2a78568dfc93b.png",
+//     head:
+//     "images/250a267fdb65fb7b4f619fcfb558ecb5.png" 
+//    }
+//   }
+//   user.save().then((user) => {
+//     console.log('saved user!', user);
+//   });
+// })
+
 module.exports.create = createUser;
 module.exports.findOne = findOne;
 module.exports.User = User;
+
 
 
