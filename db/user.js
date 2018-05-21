@@ -13,7 +13,10 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
-  hash: String,
+  hash: {
+    type: String,
+    // select: false
+  },
   name: String,
   profile: mongoose.Schema.Types.Mixed
 });
@@ -67,6 +70,7 @@ const findOne = (userId, cb) => {
         cb(null, user);
       }
     })
+
 };
 
 // User.create({email: "test@gmail.com"}, (err, user) => {
