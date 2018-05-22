@@ -1,0 +1,56 @@
+.container {
+  padding: 10px;
+  margin: 10px;
+}
+
+.square {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  margin-right: 1px;
+  margin-top: 1px;
+  padding: 0;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  color: black;
+  border-style: double;
+}
+
+.square:hover {
+  cursor: pointer;  
+}
+
+.square:focus {
+  outline: none;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.info {
+  margin: 20px;
+  text-align: center;
+}
+
+.history {
+  margin: 20px;
+  text-align: center;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+
+.title {
+  margin: 20px;
+  text-align: center;
+}
+
+

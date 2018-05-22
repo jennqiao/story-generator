@@ -7,6 +7,7 @@ import Register from './components/Register.jsx';
 import Login from './components/Login.jsx';
 import Dashboard from './components/Dashboard.jsx';
 import Story from './components/Story.jsx';
+import TicTacToeGame from './components/TicTacToe.jsx';
 import { withRouter } from 'react-router'
 const axios = require('axios');
 
@@ -99,6 +100,10 @@ class App extends React.Component {
           path='/dashboard'
           render={(props) => <Dashboard {...props} name={this.state.name}/>}
           />
+          <Route
+          path='/game'
+          render={(props) => <TicTacToeGame {...props}/>}
+          />
         </Switch>
       </div>
     )
@@ -107,7 +112,6 @@ class App extends React.Component {
 
 
 
- 
 
 
  const NavBar = ({isLoggedIn}) => {
@@ -182,6 +186,7 @@ class Home extends React.Component {
   }
 
 }
+
 
 
 
