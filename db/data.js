@@ -43,7 +43,7 @@ fs.readFile('./exampledata.tsv', 'utf8', (err, data) => {
     // }
 
     try {
-      fs.writeFileSync('./exampleStory.js', JSON.stringify(pages ,null, 2));
+      fs.writeFileSync('./exampleStory.json', JSON.stringify(pages ,null, 2));
     } catch (err) {
       /* Handle the error */
       console.log('err', err);
