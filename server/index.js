@@ -99,11 +99,11 @@ app.post('/login', function(req, res, next) {
   })(req, res, next);
 });
 
-app.post('/api/profile', (req, res) => {
+app.post('/api/saveProgress', (req, res) => {
 
-  let profile = req.data;
-  console.log('here is profile', profile);
-  console.log('here is user', req.user);
+  let currentPage = req.body.currentPage;
+  console.log('here is current page', currentPage);
+  console.log('user id', req.user)
 
 })
 

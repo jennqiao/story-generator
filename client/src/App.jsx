@@ -17,7 +17,8 @@ class App extends React.Component {
     this.state = {
       name: '',
       profile: {},
-      isLoggedIn: false
+      isLoggedIn: false,
+      currentPage: "0"
     }
     this.handleInput = this.handleInput.bind(this);
     this.handleAuthentication = this.handleAuthentication.bind(this);
@@ -26,12 +27,12 @@ class App extends React.Component {
 
   handleAuthentication(data) {
     let isLoggedIn = data.isLoggedIn;
-    console.log('am i logged in?', isLoggedIn);
     if (isLoggedIn) {
       this.setState({
         name: data.user.name,
         isLoggedIn: isLoggedIn,
-        profile: data.user.profile
+        profile: data.user.profile,
+        currentPage: data.user.currentPage
       });
       // this.props.history.push('/dashboard'); 
     }
@@ -68,9 +69,6 @@ class App extends React.Component {
   }
 
   render() {
-
-    console.log('is logged in on app?', this.state.isLoggedIn);
-
     return (
       <div>
 
@@ -87,7 +85,7 @@ class App extends React.Component {
           />       
           <Route
           path='/story'
-          render={(props) => <Story {...props} name={this.state.name} profile={this.state.profile} />}
+          render={(props) => <Story {...props} name={this.state.name} profile={this.state.profile} currentPage={this.state.currentPage} />}
           />  
           <Route
           path='/register'
@@ -117,7 +115,7 @@ class App extends React.Component {
   if (isLoggedIn) {
     return (
       <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-      <h5 className="my-0 mr-md-auto font-weight-normal"><Link to="/">Story Generator</Link></h5>
+      <h5 className="my-0 mr-md-auto font-weight-normal"><Link to="/">Choose Your Own Adventure</Link></h5>
       <nav className="my-2 my-md-0 mr-md-3">
         <Link to="/dashboard"><span className="p-2 text-dark">Profile</span></Link>
         <Link to="/story"><span className="p-2 text-dark" >My Story</span></Link>

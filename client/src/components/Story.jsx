@@ -8,13 +8,14 @@ import example2 from '../../../db/exampleStory.json';
 import img from '../images/1a.png';
 import face from '../images/faceTest.png';
 import {headlist, facelist, hairlist, haircolors} from '../images/templates/templatelist';
+const axios = require('axios');
 
 class Story extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: '0',
+      currentPage: "0",
       story: example2,
     }
     this.handleStoryOutput = this.handleStoryOutput.bind(this);
@@ -38,13 +39,30 @@ class Story extends React.Component {
 
     if (prevProps.profile !== this.props.profile) {
       console.log('new profile', this.props.profile)
+
       this.loadProfile();
+      // this.loadIllustration(this.props.currentPage);
+      // this.setState({
+      //   currentPage: this.props.currentPage
+      // });
+
     }
+
+    // console.log( 'here is current props page', this.props.currentPage );
+
+    // if (prevProps.currentPage !== this.props.currentPage) {
+    //   this.setState({
+    //     currentPage: this.props.currentPage
+    //   });
+    //   this.canvas.clear();
+
+
+      // this.loadIllustration(this.props.currentPage);
+    // }
 
   }
 
   loadIllustration (choice) {
-    console.log('here is the choice!', choice);
     let page = this.state.story[choice] || this.state.story[this.state.currentPage];
     this.canvas.setBackgroundImage(page.image, this.canvas.renderAll.bind(this.canvas));
   }
@@ -80,12 +98,23 @@ class Story extends React.Component {
       currentPage: page
     })
 
-    console.log('this is canvas', this.canvas);
-
     this.canvas.clear();
     this.loadIllustration(page);
     this.loadProfile(page);
-    // this.canvas.renderAll.bind(this.canvas);
+
+    const data = {
+      currentPage: page
+    }; 
+
+    console.log('here is data', data);
+
+    axios.post('/api/saveProgress', data)
+      .then((response) => {
+        console.log('here is response data', response.data)
+      })
+      .catch((error) => {
+        console.log('here is error', error);
+      });    
 
   }
 

@@ -49,7 +49,6 @@ class Avatar extends React.Component {
   }
 
   handleTypeSelection (type) {
-    console.log('clicked', type);
 
     if (type==='head') {
       this.setState({

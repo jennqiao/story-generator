@@ -18,7 +18,11 @@ const userSchema = new mongoose.Schema({
     // select: false
   },
   name: String,
-  profile: mongoose.Schema.Types.Mixed
+  profile: mongoose.Schema.Types.Mixed,
+  currentPage: {
+    type: String,
+    default: "0"
+  }
 });
 
 
@@ -72,6 +76,22 @@ const findOne = (userId, cb) => {
     })
 
 };
+
+const updateUser = (id, newData, callback) => {
+
+  User.update({_id: id}, newData, (err, result) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, result);
+    }
+  })
+
+}
+
+// updateUser("5b0388a2101dd027bf47d83d", {currentPage: "1a"}, (err, result) => {
+//   console.log('err and result', err, result);
+// }) 
 
 // User.create({email: "test@gmail.com"}, (err, user) => {
 //   if (err) {
@@ -146,6 +166,7 @@ const findOne = (userId, cb) => {
 
 module.exports.create = createUser;
 module.exports.findOne = findOne;
+module.exports.updateUser = updateUser;
 module.exports.User = User;
 
 

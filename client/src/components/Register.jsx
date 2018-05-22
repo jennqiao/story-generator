@@ -18,10 +18,7 @@ class Register extends React.Component {
     this.handleAuthentication = this.props.handleAuthentication;
   }
 
-  componentDidMount() {
-    console.log('name?', this.props.name);
-  }
-
+ 
   handleEmailInput(e) {
     let email = e.target.value;
     this.setState({
