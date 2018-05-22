@@ -4,6 +4,7 @@ import {fabric} from 'fabric';
 import { Link } from 'react-router-dom';
 import style from '../styles/story.css';
 import example from '../exampleStory.js';
+import example2 from '../../../db/exampleStory.json';
 import img from '../images/1a.png';
 import face from '../images/faceTest.png';
 import {headlist, facelist, hairlist, haircolors} from '../images/templates/templatelist';
@@ -14,11 +15,12 @@ class Story extends React.Component {
     super(props);
     this.state = {
       currentPage: '0',
-      story: example,
+      story: example2,
     }
     this.handleStoryOutput = this.handleStoryOutput.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.loadProfile = this.loadProfile.bind(this);
+    this.loadIllustration = this.loadIllustration.bind(this);
   }
 
   componentDidMount () {
@@ -28,11 +30,7 @@ class Story extends React.Component {
 			height:300,
 			width:600,
     });
-
-    // this.canvas.setBackgroundImage(this.state.story[this.state.currentPage].image, this.canvas.renderAll.bind(this.canvas));
-    this.canvas.setBackgroundImage(img, this.canvas.renderAll.bind(this.canvas));
-
-
+    this.loadIllustration();
 
   }
 
@@ -41,29 +39,38 @@ class Story extends React.Component {
     if (prevProps.profile !== this.props.profile) {
       console.log('new profile', this.props.profile)
       this.loadProfile();
-      
     }
 
   }
 
-  loadProfile () {
-    
-    let context = this;
-    for (var key in this.props.profile) {
+  loadIllustration (choice) {
+    console.log('here is the choice!', choice);
+    let page = this.state.story[choice] || this.state.story[this.state.currentPage];
+    this.canvas.setBackgroundImage(page.image, this.canvas.renderAll.bind(this.canvas));
+  }
 
-      fabric.Image.fromURL(this.props.profile[key], function(oImg) {
-        oImg.scale(0.2);  
-        oImg.set({'left': 296, 'top': 130});
-        context.canvas.add(oImg);
-      });
+  loadProfile (choice) {
+    let page = this.state.story[choice] || this.state.story[this.state.currentPage];
 
+    if (page.leftPosition) {
+
+      let context = this;
+      for (var key in this.props.profile) {
+        fabric.Image.fromURL(this.props.profile[key], function(oImg) {
+          oImg.scale(0.2);  
+          oImg.set({'left': page.leftPosition, 'top': page.topPosition});
+          context.canvas.add(oImg);
+        });
+      }
     }
     
   }
 
   handleStoryOutput(type) {
-    let str = this.state.story[this.state.currentPage][type];
-    let newS = str.replace("${this.state.name}", this.props.name);
+    let newS = this.state.story[this.state.currentPage][type];
+    while (newS.includes("${this.state.name}")) {  
+      newS = newS.replace("${this.state.name}", this.props.name);
+    }
     return newS;
   }
 
@@ -73,9 +80,17 @@ class Story extends React.Component {
       currentPage: page
     })
 
+    console.log('this is canvas', this.canvas);
+
+    this.canvas.clear();
+    this.loadIllustration(page);
+    this.loadProfile(page);
+    // this.canvas.renderAll.bind(this.canvas);
+
   }
 
   render () {
+    
     return (
       <div className={style.app}>
         <h1 className={style.title}>The Adventures of {this.props.name}</h1>

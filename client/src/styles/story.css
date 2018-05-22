@@ -11,8 +11,8 @@
 }
 
 .storyText {
-  composes: Amaticfont from './app.css';
-  font-size: 20px;
+  font-family: 'Josefin Slab', serif;
+  font-size: 16px;
   word-wrap: break-word;
   margin: 10px auto;
 }
