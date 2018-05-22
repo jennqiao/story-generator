@@ -15,7 +15,7 @@ class Story extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: "0",
+      currentPage: this.props.currentPage,
       story: example2,
     }
     this.handleStoryOutput = this.handleStoryOutput.bind(this);
@@ -37,28 +37,20 @@ class Story extends React.Component {
 
   componentDidUpdate(prevProps) {
 
-    if (prevProps.profile !== this.props.profile) {
+    if (prevProps.profile !== this.props.profile && this.state.story[this.props.currentPage].leftPosition) {
       console.log('new profile', this.props.profile)
-
       this.loadProfile();
-      // this.loadIllustration(this.props.currentPage);
-      // this.setState({
-      //   currentPage: this.props.currentPage
-      // });
-
     }
 
-    // console.log( 'here is current props page', this.props.currentPage );
+    if (prevProps.currentPage !== this.props.currentPage) {
+      this.setState({
+        currentPage: this.props.currentPage
+      });
+      this.canvas.clear();
 
-    // if (prevProps.currentPage !== this.props.currentPage) {
-    //   this.setState({
-    //     currentPage: this.props.currentPage
-    //   });
-    //   this.canvas.clear();
-
-
-      // this.loadIllustration(this.props.currentPage);
-    // }
+      this.loadIllustration(this.props.currentPage);
+      this.loadProfile(this.props.currentPage);
+    }
 
   }
 

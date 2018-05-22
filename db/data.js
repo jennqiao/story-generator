@@ -2,7 +2,7 @@ const fs = require('fs');
 
 let pages = {};
 
-fs.readFile('./exampledata.tsv', 'utf8', (err, data) => {
+fs.readFile('./example.tsv', 'utf8', (err, data) => {
   if (err) {
     console.log('error in reading'.err);
   } else {

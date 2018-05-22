@@ -102,8 +102,17 @@ app.post('/login', function(req, res, next) {
 app.post('/api/saveProgress', (req, res) => {
 
   let currentPage = req.body.currentPage;
-  console.log('here is current page', currentPage);
-  console.log('user id', req.user)
+  let id = ''+req.user._id;
+
+  db.updateUser(id, {currentPage: currentPage}, (err, user) => {
+    if (err) {
+      res.send(500);
+    } else {
+      res.send(200);
+      res.end('updated user', user);
+    }
+  })
+
 
 })
 
