@@ -1,45 +1,36 @@
 const fs = require('fs');
 
-// create array of objs
-// read file
-// split by line to get objs
-// for each obj
-// split by comma
-// create obj
-// assign title,id,price,keywords,description,num_reviews,avg_rating,imageUrl to value in array
-// push obj to array of objs
+let pages = {};
 
-let pages = [];
-
-fs.readFile('./exampledata.tsv', 'utf8', (err, data) => {
+fs.readFile('./example.tsv', 'utf8', (err, data) => {
   if (err) {
     console.log('error in reading'.err);
   } else {
     const objs = data.split('\r\n');
     for (let i = 0; i < objs.length; i++) {
       const page = objs[i].split('\t');
-
+      // console.log('here is page', page);
       const newObj = {
-        image: page[0],
-        text: page[1],
+        image: page[1],
+        leftPosition: Number(page[2]),
+        topPosition: Number(page[3]),
+        text: page[4],
         children: []
       }
 
-      for (let i=2; i<page.length; i+=2) {
+      for (let i=5; i<page.length; i+=2) {
         if (page[i].length > 0) {
           let childrenPage = {
             buttonText: page[i],
             pageId: page[i+1]
           }
-          console.log('here is the children', childrenPage);
           newObj.children.push(childrenPage);
         }
                 
       }
-      pages.push(newObj);
-
+      pages[page[0]] = newObj;
     }
-    console.log(pages);
+    console.log('here are the pages', pages);
 
     // for (let i = 0; i < listings.length; i++) {
     //   db.save(listings[i], (err, listing) => {
@@ -50,6 +41,16 @@ fs.readFile('./exampledata.tsv', 'utf8', (err, data) => {
     //     }
     //   });
     // }
+
+    try {
+      fs.writeFileSync('./exampleStory.json', JSON.stringify(pages ,null, 2));
+    } catch (err) {
+      /* Handle the error */
+      console.log('err', err);
+    }
+
   }
 });
 
+
+module.exports = pages;

@@ -1,0 +1,12 @@
+.app {
+  composes: app from './app.css'
+}
+
+.title {
+  composes: title from './app.css';
+}
+
+.button {
+  composes: button from './app.css';
+}
+

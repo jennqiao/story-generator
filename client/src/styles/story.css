@@ -1,0 +1,26 @@
+.app {
+  composes: app from './app.css'
+}
+
+.title {
+  composes: title from './app.css';
+}
+
+.button {
+  composes: button from './app.css';
+}
+
+.storyText {
+  font-family: 'Josefin Slab', serif;
+  font-size: 16px;
+  word-wrap: break-word;
+  margin: 10px auto;
+}
+
+.storyImage {
+  margin: 10px 0px;
+}
+
+.storyImage img {
+  width: 100%;
+}

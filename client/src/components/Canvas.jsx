@@ -35,7 +35,6 @@ class Canvas extends React.Component{
   
       let existingImage;
 
-      console.log('nextimage type', nextImage.the_type);
 
 			// Find the same kind of element
 			this.canvas.forEachObject( (image) => {
@@ -55,7 +54,6 @@ class Canvas extends React.Component{
 
       this.canvas.add(nextImage);
       this.canvas.moveTo(nextImage, nextImage.zIndex);
-      console.log('updated canvas', this.canvas);
     
   }
 	

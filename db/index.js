@@ -14,28 +14,6 @@ db.once('open', () => {
 
 module.exports = db;
 
-let storySchema = mongoose.Schema({
-  id: String,
-  image: String,
-  text: String,
-  children: [{
-    buttonText: String,
-    pageId: String
-  }]
-});
-
-const Story = mongoose.model('Story', storySchema);
-
-// const save = (page, callback) => {
-
-//   Listing.findOneAndUpdate({id: listingObj.id}, listingObj, {upsert: true, new: true}, (err, listing) => {
-//     if (err) {
-//       callback(err, null);
-//     } else {
-//       callback(null, listing);
-//     }
-//   })
-// };
 
 
 // const getSimilarListings = (id, callback) => {
@@ -67,7 +45,6 @@ const Story = mongoose.model('Story', storySchema);
 
 // }
 
-// module.exports.save = save;
 // module.exports.getSimilarListings = getSimilarListings;
 // module.exports.Listing = Listing;
 

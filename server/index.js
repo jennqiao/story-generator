@@ -68,9 +68,10 @@ app.post('/register', [
   let emailAddress = req.body.emailAddress;
   let password = req.body.password;
   let name = req.body.name;
+  let profile = req.body.profile;
 
-  console.log('data received', emailAddress, password, name);
-  db.create({email: emailAddress, password: password, name: name}, (err, user) => {
+  console.log('data received', emailAddress, password, name, profile);
+  db.create({email: emailAddress, password: password, name: name, profile: profile}, (err, user) => {
     if (err) {
       err.errors = [ {msg: "Oops! That email already exists."}]
       res.status(500);
@@ -88,7 +89,7 @@ app.post('/register', [
 
 app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
-    console.log('in the login post request');
+    console.log('in the login post request', err, user, info);
     if (err) { return next(err); }
     if (!user) { return res.status(422).send({ errors: [info]}); }
     req.login(user, function(err) {
@@ -97,6 +98,23 @@ app.post('/login', function(req, res, next) {
     });
   })(req, res, next);
 });
+
+app.post('/api/saveProgress', (req, res) => {
+
+  let currentPage = req.body.currentPage;
+  let id = ''+req.user._id;
+
+  db.updateUser(id, {currentPage: currentPage}, (err, user) => {
+    if (err) {
+      res.send(500);
+    } else {
+      res.send(200);
+      res.end('updated user', user);
+    }
+  })
+
+
+})
 
 
 // app.get('/profile', authenticationMiddleware(), (req, res) => {

@@ -5,7 +5,8 @@ import style from './styles/app.css';
 import Avatar from './components/Avatar.jsx';
 import Register from './components/Register.jsx';
 import Login from './components/Login.jsx';
-import example from './exampleStory.js';
+import Dashboard from './components/Dashboard.jsx';
+import Story from './components/Story.jsx';
 import { withRouter } from 'react-router'
 const axios = require('axios');
 
@@ -15,19 +16,23 @@ class App extends React.Component {
     super(props)
     this.state = {
       name: '',
-      isLoggedIn: false
+      profile: {},
+      isLoggedIn: false,
+      currentPage: "0"
     }
     this.handleInput = this.handleInput.bind(this);
     this.handleAuthentication = this.handleAuthentication.bind(this);
+    this.handleProfile = this.handleProfile.bind(this);
   }
 
   handleAuthentication(data) {
     let isLoggedIn = data.isLoggedIn;
-    console.log('am i logged in?', isLoggedIn);
     if (isLoggedIn) {
       this.setState({
         name: data.user.name,
-        isLoggedIn: isLoggedIn
+        isLoggedIn: isLoggedIn,
+        profile: data.user.profile,
+        currentPage: data.user.currentPage
       });
       // this.props.history.push('/dashboard'); 
     }
@@ -54,10 +59,16 @@ class App extends React.Component {
     })
   }
 
+  handleProfile (type, imageUrl) {
+    let profile = this.state.profile;
+    profile[type] = imageUrl;
+
+    this.setState({
+      profile: profile
+    })
+  }
+
   render() {
-
-    console.log('is logged in on app?', this.state.isLoggedIn);
-
     return (
       <div>
 
@@ -69,16 +80,16 @@ class App extends React.Component {
           render={(props) => <Home {...props} handleInput={this.handleInput} isLoggedIn={this.state.isLoggedIn}/>}
           />  
           <Route
-          path='/avatar'
-          render={(props) => <Avatar {...props} name={this.state.name} />}
+          path='/avatar'          
+          render={(props) => <Avatar {...props} name={this.state.name} handleProfile={this.handleProfile} />}
           />       
           <Route
           path='/story'
-          render={(props) => <Story {...props} name={this.state.name} />}
+          render={(props) => <Story {...props} name={this.state.name} profile={this.state.profile} currentPage={this.state.currentPage} />}
           />  
           <Route
           path='/register'
-          render={(props) => <Register {...props} handleAuthentication={this.handleAuthentication} name={this.state.name}/>}
+          render={(props) => <Register {...props} handleAuthentication={this.handleAuthentication} name={this.state.name} profile={this.state.profile}/>}
           />  
           <Route
           path='/login'
@@ -94,22 +105,9 @@ class App extends React.Component {
   }
  }
 
- const Choice = ({text, handleChange, nextPage}) => {
 
-  return (
-    <button className={style.button} onClick={()=> {handleChange(nextPage)}}>{text}</button>
-  )
- }
 
- const Dashboard = ({name}) => {
-   return (
-     <div className={style.app}>
-        <div className={style.title}>Welcome back {name}!</div>
-        <Link to="/story"><button className={style.button}>Continue my adventure</button></Link>
-        <button className={style.button}>See my profile</button>
-     </div>
-   )
- }
+ 
 
 
  const NavBar = ({isLoggedIn}) => {
@@ -117,7 +115,7 @@ class App extends React.Component {
   if (isLoggedIn) {
     return (
       <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-      <h5 className="my-0 mr-md-auto font-weight-normal"><Link to="/">Story Generator</Link></h5>
+      <h5 className="my-0 mr-md-auto font-weight-normal"><Link to="/">Choose Your Own Adventure</Link></h5>
       <nav className="my-2 my-md-0 mr-md-3">
         <Link to="/dashboard"><span className="p-2 text-dark">Profile</span></Link>
         <Link to="/story"><span className="p-2 text-dark" >My Story</span></Link>
@@ -148,7 +146,6 @@ class Home extends React.Component {
     this.handleInput = this.props.handleInput;
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
-
 
 
   handleKeyPress(e) {
@@ -189,58 +186,6 @@ class Home extends React.Component {
 
 
 
-
-class Story extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentPage: '0',
-      story: example
-    }
-    this.name = this.props.name;
-    this.handleStoryOutput = this.handleStoryOutput.bind(this);
-    this.handlePageChange = this.handlePageChange.bind(this);
-  }
-
-  handleStoryOutput(type) {
-    let str = this.state.story[this.state.currentPage][type];
-    let newS = str.replace("${this.state.name}", this.name);
-    return newS;
-  }
-
-  handlePageChange(page) {
-
-    this.setState({
-      currentPage: page
-    })
-
-  }
-
-  render () {
-    return (
-      <div className={style.app}>
-        <h1 className={style.title}>The Adventures of {this.name}</h1>
-        <div className={style.storyImage}>
-          <img className={style.image} src={''+this.handleStoryOutput('image')} />
-        </div>
-        <div className={style.storyText}>
-          {this.handleStoryOutput('text')}
-        </div>
-        <div>
-          {
-            this.state.story[this.state.currentPage].children.map((choice, index) => {
-              return <Choice key={index} text={choice.buttonText} nextPage={choice.pageId} handleChange={this.handlePageChange}/>
-            })
-          }
-        </div>
-      </div>
-     
-    )
-
-  }
-
-}
 
 
 export default App;

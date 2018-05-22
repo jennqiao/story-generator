@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import {fabric} from 'fabric';
 import { Link } from 'react-router-dom';
 import style from '../styles/avatar.css';
-import {bglist, headlist, facelist, hairlist, haircolors} from '../images/templates/templatelist';
+import {headlist, facelist, hairlist, haircolors} from '../images/templates/templatelist';
 import Canvas from './Canvas.jsx';
+const axios = require('axios');
 
 class Avatar extends React.Component {
 
@@ -21,12 +22,10 @@ class Avatar extends React.Component {
 
     this.handleSelection = this.handleSelection.bind(this);
     this.handleTypeSelection = this.handleTypeSelection.bind(this);
+    this.saveProfile = this.saveProfile.bind(this);
   }
 
-  handleSelection (imgElement, hairNum) {
-
-    console.log('hairnum', hairNum);
-
+  handleSelection (imgElement, index) {
 
     let imgInstance = new fabric.Image(imgElement, {  
       width: 400,
@@ -35,16 +34,21 @@ class Avatar extends React.Component {
       zIndex : this.state.currentZIndex
     });
 
-    this.setState({currentSelection: imgInstance });
+    this.setState({
+      currentSelection: imgInstance
+    });
 
     if (this.state.currentType === 'hair') {
-      this.setState({currentHairChoice: hairNum});
+      this.setState({currentHairChoice: index});
     }
+
+    this.props.handleProfile(
+      this.state.currentType, this.state.currentChoices[index]
+    );
 
   }
 
   handleTypeSelection (type) {
-    console.log('clicked', type);
 
     if (type==='head') {
       this.setState({
@@ -72,6 +76,18 @@ class Avatar extends React.Component {
       })
 
     }
+  }
+
+  saveProfile () {
+
+    axios.post('/api/profile', this.state.profile)
+    .then((response) => {
+      console.log('here is response', response.data);
+    })
+    .catch((error) => {
+      console.log('here is error', error);
+    });
+
   }
 
   render () {

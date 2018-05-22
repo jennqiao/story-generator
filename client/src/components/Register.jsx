@@ -18,10 +18,7 @@ class Register extends React.Component {
     this.handleAuthentication = this.props.handleAuthentication;
   }
 
-  componentDidMount() {
-    console.log('name?', this.props.name);
-  }
-
+ 
   handleEmailInput(e) {
     let email = e.target.value;
     this.setState({
@@ -41,7 +38,8 @@ class Register extends React.Component {
     const data = {
       emailAddress: this.state.emailAddress,
       password: this.state.password,
-      name: this.props.name
+      name: this.props.name,
+      profile: this.props.profile
     };
 
     console.log('here is data', data);
