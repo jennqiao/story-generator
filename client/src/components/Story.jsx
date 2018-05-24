@@ -32,6 +32,7 @@ class Story extends React.Component {
 			width:600,
     });
     this.loadIllustration();
+    this.loadProfile();
 
   }
 
@@ -86,9 +87,16 @@ class Story extends React.Component {
 
   handlePageChange(page) {
 
+    this.props.handlePageUpdate(page);
+
+    if (page === '5a') {
+      this.props.history.push('/game')
+    }
+
     this.setState({
       currentPage: page
     })
+
 
     this.canvas.clear();
     this.loadIllustration(page);

@@ -92,7 +92,7 @@
     ]
   },
   "3a": {
-    "image": "https://s3.us-east-2.amazonaws.com/storygenerator/3a.gif",
+    "image": "https://s3.us-east-2.amazonaws.com/storygenerator/4a.png",
     "leftPosition": 0,
     "topPosition": 0,
     "text": "${this.state.name} asks, “ Who is the Evil King?” “The Evil King is our dictator. He was jealous of my daughter's wit, and took her away. Can you please help me?” Suddenly, there was a big flash and the Evil King appeared. “Who dares to call me jealous ? How can I be jealous—I am the smartest ruler of all rulers so I don’t need to worry about some little girl. To prove it, if anyone can beat me at a game, I will return your daughter to you.” ",
@@ -108,7 +108,7 @@
     ]
   },
   "3b": {
-    "image": "https://s3.us-east-2.amazonaws.com/storygenerator/3a.gif",
+    "image": "https://s3.us-east-2.amazonaws.com/storygenerator/4a.png",
     "leftPosition": 0,
     "topPosition": 0,
     "text": "${this.state.name} asks, “ Why did the Evil King kidnap your daughter?” “The Evil King was jealous of my daughter's wit, and took her away. Can you please help me?” Suddenly, there was a big flash and the Evil King appeared. “Who dares to call me jealous ? How can I be jealous—I am the smartest ruler of all rulers so I don’t need to worry about some little girl. To prove it, if anyone can beat me at a game, I will return your daughter to you.” ",
@@ -124,7 +124,7 @@
     ]
   },
   "4a": {
-    "image": "https://s3.us-east-2.amazonaws.com/storygenerator/4a.gif",
+    "image": "https://s3.us-east-2.amazonaws.com/storygenerator/4a.png",
     "leftPosition": 0,
     "topPosition": 0,
     "text": "${this.state.name} agrees to help the old woman. “Great - I am the best at Tic Tac Toe. If you can beat me at Tic Tac Toe, then I will agree to release this old woman’s daughter.”",
@@ -136,7 +136,7 @@
     ]
   },
   "4b": {
-    "image": "https://s3.us-east-2.amazonaws.com/storygenerator/4a.gif",
+    "image": "https://s3.us-east-2.amazonaws.com/storygenerator/4a.png",
     "leftPosition": 0,
     "topPosition": 0,
     "text": "${this.state.name} wasn’t confident she could beat the King so she said no. The King laughed haughtily and said, “I knew it! No one is smarter than me.” The old woman bursts in tears again, and ${this.state.name} ran all the way back to her closet. She never went back to the fairyland again. ",
@@ -148,7 +148,7 @@
     ]
   },
   "5a": {
-    "image": "",
+    "image": "https://s3.us-east-2.amazonaws.com/storygenerator/5a.png",
     "leftPosition": 0,
     "topPosition": 0,
     "text": "The King was shocked. How did you beat me? I must go practice my Tic Tac Toe skills now. He disappears in a puff, and the old woman’s daughter runs back. The old woman thanks ${this.state.name}, and says, “Thank you for saving us! You are our only chance if we ever hope to get rid of our Evil King. Please stay and help us.”",
@@ -164,17 +164,27 @@
     ]
   },
   "6a": {
-    "image": "https://s3.us-east-2.amazonaws.com/storygenerator/6a.gif",
+    "image": "https://s3.us-east-2.amazonaws.com/storygenerator/6a.png",
     "leftPosition": 0,
     "topPosition": 0,
     "text": "\"Of course!\" ${this.state.name} says. Just then, she realized it was getting late and her mom will probably be worried. She says, “I promise I will come back tomorrow.” With that, she goes through the closet door that takes her back to her bedroom. ",
-    "children": []
+    "children": [
+      {
+        "buttonText": "Play again!",
+        "pageId": "0"
+      }
+    ]
   },
   "6b": {
-    "image": "https://s3.us-east-2.amazonaws.com/storygenerator/6a.gif",
+    "image": "https://s3.us-east-2.amazonaws.com/storygenerator/6a.png",
     "leftPosition": 0,
     "topPosition": 0,
     "text": "${this.state.name} wants to help, but she knew her mom will be looking for her soon. She says “I promise I will come back tomorrow.” With that, she goes through the closet door that takes her back to her bedroom. ",
-    "children": []
+    "children": [
+      {
+        "buttonText": "Play again!",
+        "pageId": "0"
+      }
+    ]
   }
 }
