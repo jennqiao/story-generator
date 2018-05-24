@@ -24,6 +24,7 @@ class App extends React.Component {
     this.handleInput = this.handleInput.bind(this);
     this.handleAuthentication = this.handleAuthentication.bind(this);
     this.handleProfile = this.handleProfile.bind(this);
+    this.handlePageUpdate = this.handlePageUpdate.bind(this);
   }
 
   handleAuthentication(data) {
@@ -48,6 +49,12 @@ class App extends React.Component {
       .catch((error) => {
         console.log('here is error', error);
       });
+  }
+
+  handlePageUpdate(page) {
+    this.setState({
+      currentPage: page
+    })
   }
 
   
@@ -86,7 +93,7 @@ class App extends React.Component {
           />       
           <Route
           path='/story'
-          render={(props) => <Story {...props} name={this.state.name} profile={this.state.profile} currentPage={this.state.currentPage} />}
+          render={(props) => <Story {...props} handlePageUpdate={this.handlePageUpdate} name={this.state.name} profile={this.state.profile} currentPage={this.state.currentPage} />}
           />  
           <Route
           path='/register'
@@ -131,7 +138,7 @@ class App extends React.Component {
   } else {
     return (
       <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-      <h5 className="my-0 mr-md-auto font-weight-normal"><Link to="/">Story Generator</Link></h5>
+      <h5 className="my-0 mr-md-auto font-weight-normal"><Link to="/">Choose Your Own Adventure</Link></h5>
       <Link to="/login"><span className="btn btn-outline-primary">Login</span></Link>
       </div>
     )

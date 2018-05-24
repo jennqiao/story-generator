@@ -87,6 +87,8 @@ class Story extends React.Component {
 
   handlePageChange(page) {
 
+    this.props.handlePageUpdate(page);
+
     if (page === '5a') {
       this.props.history.push('/game')
     }
@@ -94,6 +96,7 @@ class Story extends React.Component {
     this.setState({
       currentPage: page
     })
+
 
     this.canvas.clear();
     this.loadIllustration(page);
