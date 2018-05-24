@@ -12,6 +12,8 @@ const MongoStore = require('connect-mongo')(session);
 
 
 var app = express();
+let port = process.env.PORT || 1111;
+
 module.exports.app = app;
 
 app.use(express.static(__dirname + '/../client/public'));
@@ -134,7 +136,7 @@ function authenticationMiddleware () {
 
 
 
-app.listen(8080, function() {
+app.listen(port, function() {
   console.log('Listening on port 1111 now');
 });
 
