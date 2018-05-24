@@ -134,7 +134,7 @@ function authenticationMiddleware () {
 
 
 
-app.listen(1111, function() {
+app.listen(8080, function() {
   console.log('Listening on port 1111 now');
 });
 
